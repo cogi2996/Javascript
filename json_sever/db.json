@@ -1,0 +1,19 @@
+{
+  "courses": [
+    {
+      "name": "Node & ExpressJS",
+      "description": "Học Back-end với Node & ExpressJS framework, hiểu các khái niệm khi làm Back-end và xây dựng RESTful API cho trang web.",
+      "id": 1
+    },
+    {
+      "name": "Làm việc với Terminal & Ubuntu",
+      "description": "Sở hữu một Terminal hiện đại, mạnh mẽ trong tùy biến và học cách làm việc với Ubuntu là một bước quan trọng trên con đường trở thành một Web Developer.",
+      "id": 2
+    },
+    {
+      "name": "[Phần 1] Tạo dự án ReactJS với Webpack và Babel",
+      "description": "Hôm nay mình có quay một video trong khóa học ReactJS là “Tạo dự án ReactJS với Webpack và Babel”. Mình làm video này với mong muốn chia sẻ cho các bạn có thể hình dung ra dự án được tạo bởi “create-react-app” được xây dựng như thế nào. Các bạn có thể xem thêm video hướng dẫn ở đây nhé.",
+      "id": 4
+    }
+  ]
+}
