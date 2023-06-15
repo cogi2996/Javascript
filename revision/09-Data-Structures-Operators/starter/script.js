@@ -48,10 +48,25 @@ const restaurant = {
   }
 };
 //----------------------------------------------------------------
+
+// short-circuting
+console.log(0||null||1); 
+const number1  = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(number1);
+restaurant.numGuests = 23;
+const number2 = restaurant.numGuests || 10 // loi dung toan tu ||
+console.log(number2);
+
+
+if(restaurant.orderPizza)
+  restaurant.orderPizza('mushrooms','spinach')
+restaurant.orderPizza&&restaurant.orderPizza('mushrooms','spinach')
+  //----------------------------------------------------------------
+
 // REST 
 // REST in array
 // SPREAD ,because on the right side of '='
-const arr =  [1,2,...[3,4]];
+/* const arr =  [1,2,...[3,4]];
 console.log(arr);
 // REST, because on the right side of '='
 const [a,b,...other] = [1,2,3,4,5];
@@ -62,9 +77,9 @@ console.log(pizza,risotto,otherFood);
 // REST in OBJECT 
 const {fri,...weekdays} = restaurant.openingHours
 console.log(fri,weekdays);
-
+ */
 //2) REST in Function
-const add = function(...numbers){
+/* const add = function(...numbers){
   let sum = 0
   for(let i = 0;i<numbers.length;i++)
   {
@@ -80,7 +95,7 @@ const x = [1,1,1]
 add(...x)
 
 restaurant.orderPizza('mushrooms','onion','olives','spinach');
-restaurant.orderPizza('mushrooms');
+restaurant.orderPizza('mushrooms'); */
 
 //----------------------------------------------------------------
 // SPREAD
