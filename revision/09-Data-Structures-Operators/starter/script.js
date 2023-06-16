@@ -41,29 +41,124 @@ const restaurant = {
   orderPasta: function (ing1, ing2, ing3) {
     console.log(`Here is your delicous pasta with ${ing1}, ${ing2}, ${ing3}`);
   },
-  orderPizza: function (mainIngredient,...otherIngredient) {
+  orderPizza: function (mainIngredient, ...otherIngredient) {
     console.log(mainIngredient);
     console.log(otherIngredient);
-    
-  }
+  },
 };
+//----------------------------------------------------------------
+// coding challenge #1
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+const [players1, players2] = game.players;
+let [gk, ...fieldPlayers] = players1;
+const allPlayers = [...players1, ...players2];
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+// const { team2, team1, x } = game.odds;
+const {odds:{team1,x:draw,team2}} = game
+console.log(team2, team1, draw);
+const printGoals = function(...players) {
+  console.log(`${players.length} goals were scored` );
+  
+}
+
+printGoals(...game.score)
+
+team1 < team2 && console.log('team 1 is more likely to win') 
+team2 < team1 && console.log('team 2 is more likely to win') 
+//----------------------------------------------------------------
+//Logical Assigment Operators
+/* const rest1 = {
+  name:'Capri',
+  numGuests:0
+}
+
+const rest2 = {
+  name:'La Piazza',
+  owner:'Giovani Rossi'
+}
+
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+console.log(rest1.numGuests);
+console.log(rest2.numGuests);
+
+rest1.owner = rest1.owner && '<ANONYMOUS>'
+rest2.owner = rest2.owner && '<ANONYMOUS>'
+
+console.log(rest1);
+console.log(rest2);
+
+rest1.owner &&=  '<ANONYMOUS>'
+rest2.owner &&=  '<ANONYMOUS>' */
+
+//----------------------------------------------------------------
+
+// NUllish coalesting operator
+
+/* restaurant.numGuests = 0
+const guests = restaurant.numGuests || 10;
+console.log(guests);
+
+const guestCorrect = restaurant.numGuests ?? 10
+console.log(guestCorrect); */
+
 //----------------------------------------------------------------
 
 // short-circuting
-console.log(0||null||1); 
+/* console.log(0||null||1); 
 const number1  = restaurant.numGuests ? restaurant.numGuests : 10;
 console.log(number1);
 restaurant.numGuests = 23;
-const number2 = restaurant.numGuests || 10 // loi dung toan tu ||
+const number2 = restaurant.numGuests || 0 // loi dung toan tu ||
 console.log(number2);
 
 
 if(restaurant.orderPizza)
   restaurant.orderPizza('mushrooms','spinach')
-restaurant.orderPizza&&restaurant.orderPizza('mushrooms','spinach')
-  //----------------------------------------------------------------
+restaurant.orderPizza&&restaurant.orderPizza('mushrooms','spinach') */
+//----------------------------------------------------------------
 
-// REST 
+// REST
 // REST in array
 // SPREAD ,because on the right side of '='
 /* const arr =  [1,2,...[3,4]];
@@ -128,7 +223,6 @@ restaurantCopy.resName = 'William'
 console.log(restaurantCopy.resName,restaurant.resName);
 restaurantCopy.mainMenu.push('haohaochuacay')
 console.log(restaurantCopy.mainMenu,restaurant.mainMenu); */
-
 
 //----------------------------------------------------------------
 

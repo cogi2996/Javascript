@@ -509,6 +509,8 @@ const game = {
   },
 };
 
+
+
 /*
 // 1.
 for (const [i, player] of game.scored.entries())
