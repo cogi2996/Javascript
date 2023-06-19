@@ -5,26 +5,30 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
+const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
 const restaurant = {
   resName: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  // openingHours: openingHours,
+  openingHours,
   order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
@@ -45,10 +49,143 @@ const restaurant = {
     console.log(mainIngredient);
     console.log(otherIngredient);
   },
+  test() {
+    console.log('hello');
+  },
 };
 //----------------------------------------------------------------
-// coding challenge #1
+// coding challence #2
 const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+//#2.1
+for (const [index, name] of Object.entries(game.scored)) {
+  console.log(`Goal ${Number(index) + 1}:${name}  `);
+}
+
+//#2.2
+let average = 0;
+let gameOddsValues = Object.values(game.odds);
+for (const item of gameOddsValues) {
+  average+= item;
+}
+console.log('Average odds:',average/gameOddsValues.length);
+//#2.3
+const [team1Val,xVal,team2Val] = Object.values(game.odds)
+console.log(`Odd of victory ${game['team1']} :${team1Val} `);
+console.log(`Odd of draw:${xVal} `);
+console.log(`Odd of victory ${game['team2']} :${team2Val} `);
+//#2.4
+const scorers = {}
+for(const player of game.scored) {
+  scorers[player] =  scorers[player]+1||1
+  
+}
+console.log(scorers);
+
+//----------------------------------------------------------------
+
+//014.looping object
+/* const properties = Object.keys(openingHours);
+let openStr = `We are open on ${properties.length} on:`;
+
+for (const day of Object.keys(openingHours)) {
+  openStr += ` ${day},`;
+}
+console.log(openStr);
+
+// Properties VALUES  
+const values = Object.values(openingHours);
+console.log(values);
+
+// entries Ojbect
+const entries  = Object.entries(openingHours);
+console.log(entries);
+for(const [key,{close,open}] of entries)
+{
+  console.log(`On ${key} we open at ${open} and close at ${close} `); */
+// }
+//----------------------------------------------------------------
+//013. optional chaining
+// restaurant.test()
+/* if (restaurant.openingHours.mon) {
+  console.log(restaurant.openingHours.mon.open);
+}
+
+// with optional chaining
+console.log(restaurant.openingHours.mon?.open);
+
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'close';
+  console.log(`On ${day}, we open at ${open}  `);
+}
+
+// function
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderRissoto?.(0, 1) ?? 'Method does not exist');
+// array
+
+const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+console.log(users[0]?.name ?? 'User array empty'); */
+
+//----------------------------------------------------------------
+// 011.for of
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// for (const item of menu) {
+//   console.log(item);
+// }
+
+// for(const [i,el] of menu.entries()) {
+//   // const [index,itemMenu] = item
+//   // console.log(`${index+1}: ${itemMenu}`);
+//   console.log(`${i+1}: ${el}`);
+
+// }
+// console.log(...menu.entries());
+
+//----------------------------------------------------------------
+// coding challenge #1
+/* const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
   players: [
@@ -104,7 +241,7 @@ const printGoals = function(...players) {
 printGoals(...game.score)
 
 team1 < team2 && console.log('team 1 is more likely to win') 
-team2 < team1 && console.log('team 2 is more likely to win') 
+team2 < team1 && console.log('team 2 is more likely to win')  */
 //----------------------------------------------------------------
 //Logical Assigment Operators
 /* const rest1 = {
