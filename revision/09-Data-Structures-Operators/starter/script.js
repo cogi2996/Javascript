@@ -54,6 +54,149 @@ const restaurant = {
   },
 };
 //----------------------------------------------------------------
+// #020.CODING CHALLENCE #3
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '🔶 Yellow card'],
+  ]);
+
+console.log(gameEvents.values());
+//#3.1
+const events = [...new Set(gameEvents.values())]
+//#3.2
+gameEvents.delete(64) 
+//#3.3
+console.log(`An event happend on average, every ${90/gameEvents.size} minutes `);
+//#3.4
+for(const [time, value] of gameEvents)
+{
+  const half = time<=45 ? `[FIRST HALF]` : `[SECOND HALF]`
+  console.log(`${half} ${time}: ${value}  `);
+    
+}
+
+//----------------------------------------------------------------
+//016.Sets
+/* const ordersSet = new Set(
+  ['Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza'
+]
+); */
+/* console.log(ordersSet);
+
+console.log(new Set('haha'));
+console.log(new Set());
+console.log(ordersSet.size);
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+
+console.log(ordersSet.add('Garlic Bread'));
+
+console.log(ordersSet.add('Garlic Bread'));
+
+console.log(ordersSet);
+console.log(ordersSet.delete('Risotto'));
+// ordersSet.clear()
+// console.log(ordersSet);
+
+for(const order of ordersSet) console.log(order);
+
+const staff = ['Waiter','Chef','Waiter','Manager','Chef','Waiter']
+
+const staffUnique = [...new Set(staff)]
+console.log(staffUnique);
+console.log(new Set(staff).size);
+console.log(new Set('Dang Cong Tuan').size);
+ */
+//----------------------------------------------------------------
+// Map
+// const rest  = new Map();
+// rest.set('name','Classico Italiano')
+// rest.set(1,'Firenze, Italy')
+// console.log(rest.set(2,'Lisbon, Portugal'));
+
+// rest.set('categories',['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+// .set('open',11)
+// .set('close',23)
+// .set(true,'We are open :D')
+// .set(false,'We are closed :(')
+
+// console.log(rest.get('name'));
+// const time = 15
+// console.log(rest.get(rest.get('open')<time && time < rest.get('close')));
+
+// console.log(rest.delete(2));
+// console.log(rest.has(1));
+// console.log(rest.size);
+
+
+// console.log(rest.set([1,2],'Test'));
+// console.log(rest.get([1,2]));
+
+// const arr = [1,2]
+// console.log(rest.set(arr,'Test Pass'));
+// console.log(rest.get(arr));
+// 018. Maps_iteration
+
+
+
+/* const question = new Map([
+  ['question','What is the best programing language in the world?'],
+  [1,'C'],
+  [2,'Java'],
+  [3,'JavaScript'],
+  ['correct',3],
+  [true,'Correct 🎉'],
+  [false,'Try again! '],
+])
+
+console.log(question);
+const hoursMap  = new Map(openingHours.entries)
+console.log(new Map(hoursMap));
+
+// quiz app
+console.log(question.get('question'));
+
+for(const [key,value] of question){
+  if(typeof key === 'number') console.log(`Answer ${key}: ${value} ` );
+  
+}
+// const answer = Number(prompt('Your answer'))
+const answer  =  3
+console.log(question.get(answer === question.get('correct')));
+
+// convert map to array
+console.log([...question]);
+console.log([...question.entries()]);
+console.log([...question.keys()]);
+console.log([...question.values()]); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------------------------------------------
 // coding challence #2
 const game = {
   team1: 'Bayern Munich',
@@ -97,7 +240,7 @@ const game = {
 };
 
 //#2.1
-for (const [index, name] of Object.entries(game.scored)) {
+/* for (const [index, name] of Object.entries(game.scored)) {
   console.log(`Goal ${Number(index) + 1}:${name}  `);
 }
 
@@ -119,7 +262,7 @@ for(const player of game.scored) {
   scorers[player] =  scorers[player]+1||1
   
 }
-console.log(scorers);
+console.log(scorers); */
 
 //----------------------------------------------------------------
 
