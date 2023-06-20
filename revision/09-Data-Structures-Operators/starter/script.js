@@ -54,8 +54,104 @@ const restaurant = {
   },
 };
 //----------------------------------------------------------------
+
+/* const airline = 'TAP Air Portugal'
+const plane = 'A320'
+
+console.log(airline[0]);
+console.log('B737'[2]);
+
+console.log(airline.length);
+console.log('B737'.length);
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal'));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4,7));
+console.log(airline.slice(0,airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ')+1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1,-1));
+
+const checkMiddleSeat = function(seat){
+  if(seat.slice(-1)=== 'B'||seat.slice(-1) === 'C'){
+    console.log('You got a middle seat');
+    
+  }else{
+    console.log('You got lucky ');
+    
+  }
+}
+   
+checkMiddleSeat('11B')
+checkMiddleSeat('11A')
+checkMiddleSeat('11C')
+
+console.log(new String ('Halo'));
+console.log(typeof new String ('Halo').slice(1));
+console.log(typeof new String ('Halo').slice(1)); */
+
+const airline = 'TAP Air Portugual';
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+const passenger = 'jOnAS';
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+const email = 'hello@jonas.io'
+const loginEmail = '  Hello@Jonas.Io \n'
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(email === normalizedEmail);
+
+
+// replace 
+const priceGB = '288,97&'
+const priceUS = priceGB.replace('&','$').replace(',', '.')
+console.log(priceUS);
+
+const announcement = 'All passengers come to boarding door 23. Boarding door 23!'
+console.log(announcement.replace('door','gate'));
+console.log(announcement.replace(/door/g,'gate'))
+
+// Booleans
+const plane = 'Airbus A320neo'
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+console.log(plane.startsWith('Airb'));
+console.log(plane.endsWith('neo'));
+
+if(plane.startsWith('Air')&& plane.endsWith('neo')){
+  console.log('Part of the NEW ARirbus family');
+  
+}
+
+// excercise 
+const checkBaggage = function(item){
+  const baggage = item.toLowerCase();
+  if(baggage.includes('knife')||baggage.includes('gun'))
+    console.log('You are NOT allowed on board');
+  else  
+    console.log('Welcome aboard!');
+}
+
+checkBaggage('I have a laptop,some Food and a pocket knife')
+checkBaggage('Socks and camera')
+
+console.log('' === '\n'.trim());
+
+
+
+
+//----------------------------------------------------------------
 // #020.CODING CHALLENCE #3
-const gameEvents = new Map([
+/* const gameEvents = new Map([
   [17, '⚽ GOAL'],
   [36, '🔁 Substitution'],
   [47, '⚽ GOAL'],
@@ -83,6 +179,9 @@ for(const [time, value] of gameEvents)
   console.log(`${half} ${time}: ${value}  `);
     
 }
+
+const setText = new Set([1,'haha',1])
+console.log(setText); */
 
 //----------------------------------------------------------------
 //016.Sets
@@ -142,7 +241,6 @@ console.log(new Set('Dang Cong Tuan').size);
 // console.log(rest.has(1));
 // console.log(rest.size);
 
-
 // console.log(rest.set([1,2],'Test'));
 // console.log(rest.get([1,2]));
 
@@ -150,8 +248,6 @@ console.log(new Set('Dang Cong Tuan').size);
 // console.log(rest.set(arr,'Test Pass'));
 // console.log(rest.get(arr));
 // 018. Maps_iteration
-
-
 
 /* const question = new Map([
   ['question','What is the best programing language in the world?'],
@@ -183,18 +279,6 @@ console.log([...question]);
 console.log([...question.entries()]);
 console.log([...question.keys()]);
 console.log([...question.values()]); */
-
-
-
-
-
-
-
-
-
-
-
-
 
 //----------------------------------------------------------------
 // coding challence #2
