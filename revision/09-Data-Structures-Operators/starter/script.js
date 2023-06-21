@@ -5,7 +5,7 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
-const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+/* const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const openingHours = {
   [weekdays[3]]: {
     open: 12,
@@ -52,7 +52,36 @@ const restaurant = {
   test() {
     console.log('hello');
   },
-};
+}; */
+//----------------------------------------------------------------
+//# CODING CHALLENCE #4
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const BtnTextarea = document.querySelector('button');
+const textArea = document.querySelector('textarea');
+
+BtnTextarea.addEventListener('click', function () {
+  let text = textArea.value.toLowerCase().split('\n');
+  const convertText = function (text) {
+    text = text.trim();
+    const arrText = text.split('_');
+    for (let i = 1; i < arrText.length; i++) {
+      arrText[i] = arrText[i].replace(
+        arrText[i][0],
+        arrText[i][0].toUpperCase()
+      );
+    }
+    return arrText.join('');
+  };
+  text = text.map(convertText);
+  let MaxtextlengthArr = Math.max(...text.map(text => text.length))
+  
+  for (let i = 0; i < text.length; i++) {
+    text[i] = text[i]+''.padEnd(MaxtextlengthArr - text[i].length+1)+ '✅'.repeat(i + 1);
+  }
+  textArea.value = text.join('\n');
+});
 //----------------------------------------------------------------
 
 /* const airline = 'TAP Air Portugal'
@@ -149,7 +178,7 @@ console.log('' === '\n'.trim()); */
 
 //----------------------------------------------------------------
 //#023
-console.log('a+very+nice+string'.split('+'));
+/* console.log('a+very+nice+string'.split('+'));
 console.log('Jonas Schmedtmann'.split(' '));
 
 const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
@@ -184,7 +213,7 @@ const planesInLine = function(n){
 }
 planesInLine(3)
 planesInLine(6)
-planesInLine(9)
+planesInLine(9) */
 //----------------------------------------------------------------
 // #020.CODING CHALLENCE #3
 /* const gameEvents = new Map([
@@ -318,7 +347,7 @@ console.log([...question.values()]); */
 
 //----------------------------------------------------------------
 // coding challence #2
-const game = {
+/* const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
   players: [
@@ -357,7 +386,7 @@ const game = {
     x: 3.25,
     team2: 6.5,
   },
-};
+}; */
 
 //#2.1
 /* for (const [index, name] of Object.entries(game.scored)) {
