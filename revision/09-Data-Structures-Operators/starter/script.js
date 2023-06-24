@@ -4,6 +4,19 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
+const infoFlights = flights.split('+');
+
+for (const info of infoFlights) {
+  const [lable, src, des, time] = info.split(';');
+  let output = `${lable.startsWith('_Delay')?'🔴':''}${lable.replace(/_/g, ' ')} from ${src
+    .slice(0, 3)
+    .toUpperCase()} to ${des.slice(0, 3).toUpperCase()} (${time})`
+    .padStart(46);
+
+  console.log(output);
+}
+1;
+
 // Data needed for first part of the section
 /* const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const openingHours = {
@@ -54,11 +67,26 @@ const restaurant = {
   },
 }; */
 //----------------------------------------------------------------
+//#prace
+
+//----------------------------------------------------------------
 //# CODING CHALLENCE #4
-document.body.append(document.createElement('textarea'));
+/* document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
-const BtnTextarea = document.querySelector('button');
+document.querySelector('button').addEventListener('click',function(){
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n')
+  for(const [index,row] of rows.entries()){
+    const [first,second] = row.trim().toLowerCase().split('_');
+    const output = `${first}${second.replace(second[0],second[0].toUpperCase())}`
+    console.log(output.padEnd(20)+'✅'.repeat(index+1));
+    
+  }
+
+}) */
+
+/* const BtnTextarea = document.querySelector('button');
 const textArea = document.querySelector('textarea');
 
 BtnTextarea.addEventListener('click', function () {
@@ -81,7 +109,7 @@ BtnTextarea.addEventListener('click', function () {
     text[i] = text[i]+''.padEnd(MaxtextlengthArr - text[i].length+1)+ '✅'.repeat(i + 1);
   }
   textArea.value = text.join('\n');
-});
+}); */
 //----------------------------------------------------------------
 
 /* const airline = 'TAP Air Portugal'
