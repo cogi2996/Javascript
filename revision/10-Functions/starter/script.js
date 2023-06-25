@@ -92,7 +92,7 @@ greet('Hey')('Jonas')
 /* const greet = greeting => name => console.log(`${greeting} ${name}  `);
 greet('hey')('Tuan') */
 
-const lufthansa = {
+/* const lufthansa = {
   airline: 'lufthansa',
   iataCode: 'LH',
   bookings: [],
@@ -100,42 +100,129 @@ const lufthansa = {
     console.log(
       `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
     );
-    this.bookings.push({flight: `${this.iataCode}${flightNum}`,name});
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
   },
 };
 
-lufthansa.book(239,'Jonas Schedtmann')
-lufthansa.book(635,'John Smith')
+lufthansa.book(239, 'Jonas Schedtmann');
+lufthansa.book(635, 'John Smith');
 console.log(lufthansa);
 
 const eurowings = {
-    airline:'Eurowings',
-    iataCode:'Ew',
-    bookings:[],
-}
+  airline: 'Eurowings',
+  iataCode: 'Ew',
+  bookings: [],
+};
 
 const book = lufthansa.book;
 // DOES NOT WORK
 //book(23,'Sarah Williams')
 
 // CALL METHOD
-book.call(eurowings,23,'Sarah Williams');
-book.call(lufthansa,239,'Mary Cooper')
+book.call(eurowings, 23, 'Sarah Williams');
+book.call(lufthansa, 239, 'Mary Cooper');
 console.log(eurowings);
 console.log(lufthansa);
 
 const swiss = {
-    airline: 'Swiss Air Lines',
-    iataCode: 'SW',
-    bookings:[],
-}
+  airline: 'Swiss Air Lines',
+  iataCode: 'SW',
+  bookings: [],
+};
 
-book.call(swiss,583,'Marry Cooper')
+book.call(swiss, 583, 'Marry Cooper');
 console.log(swiss);
 
 // APPLY METHOD
-const flightData = [525,'George Cooper']
-book.apply(swiss,flightData)
+const flightData = [525, 'George Cooper'];
+book.apply(swiss, flightData);
 console.log(swiss);
 
+// 009 the Bind method
+const bookEW = book.bind(eurowings);
+const bookEH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
 
+bookEW(23, 'Steven Williams');
+
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('Jonas Schmedtmann');
+bookEW23('Marth Cooper');
+
+// With Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++;
+  console.log(this.planes);
+};
+// lufthansa.buyPlane()
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+const addTaxRate = function(rate){
+  // return (rate,value) => value*(rate+1)
+  return function(value){
+    return value*(rate+1)
+  }
+} 
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
+ */
+
+// #010 CODING CHALLENCE #1
+
+/* const poll = {
+  question: 'What is your favourite programming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+  registerNewAnswer() {
+    const answer = Number(
+      prompt(
+        `${this.question}\n${this.options.join('\n')}(Write option number)`
+      )
+    );
+    typeof answer === 'number' &&
+      answer <= this.answers.length &&
+      answer >= 0 &&
+      this.answers[answer]++;
+    this.displayResults('array')
+    this.displayResults('string')
+  },
+
+  displayResults(type = 'array') {
+    if (type === 'array') console.log(this.answers);
+    else if (type === 'string')
+      console.log(`Poll results are ${this.answers.join(', ')}`);
+  },
+};
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+
+  poll.displayResults.call({answers:[5, 2, 3]},'array')
+  poll.displayResults.call({answers:[1, 5, 3, 9, 6, 1]},'string') */
+
+  //011 immediately  invoked function expression
+const runOnce = function(){
+  console.log('This will never run again');
+}
+runOnce();
+
+(function(){
+  console.log('This will never run again');
+})();
+
+(() => console.log('This will never run again'))()
