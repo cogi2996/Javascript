@@ -281,10 +281,32 @@ boardPassengers(180,3)
 
 // 014 Coding challence #2
 
-(function () {
+/* (function () {
   const header = document.querySelector('h1');
   header.style.color = 'red';
   document.querySelector('body').addEventListener('click', function () {
     header.style.color = 'blue';
   });
 })();
+ */
+
+/* function testAgurment() {
+  for(let item of arguments) {
+    console.log(item);
+    
+  }
+}
+
+testAgurment('haha','hihi') */
+
+const obj = {
+  a : 'haha',
+  b:[1,2,3],
+  c(haha){
+    console.log('hihi');
+    
+  }
+}
+
+console.table(obj);
+document.querySelector('body').style.backgroundColor = 'red'
