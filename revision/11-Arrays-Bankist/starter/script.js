@@ -62,23 +62,35 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function (movements) {
-  containerMovements.innerHTML = ''
+  containerMovements.innerHTML = '';
   movements.forEach(function (mov, i) {
-    const type = mov > 0 ? 'deposit' : 'withdrawal'
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `<div class="movements__row">
-    <div class="movements__type movements__type--${type} ">${i+1}  ${type} </div>
+    <div class="movements__type movements__type--${type} ">${
+      i + 1
+    }  ${type} </div>
     <div class="movements__value">${mov} €</div>
   </div>`;
-  containerMovements.insertAdjacentHTML('afterbegin',html)
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
 displayMovements(account1.movements);
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
+const createUsernames = function(accs){
+  accs.forEach(function(acc){
+    acc.username = acc.owner.toLowerCase().split(' ').map(text => text[0]).join('')
+  })
+}
+createUsernames(accounts)
 
+const calcDisplayBalance = function(movements){
+  const balance = movements.reduce((acc, mov) => acc + mov, 0)
+  labelBalance.textContent = `${balance} EUR`
+}
+calcDisplayBalance(account1.movements)
+
+// LECTURES
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
@@ -86,10 +98,85 @@ const currencies = new Map([
 ]);
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+/////////////////////////////////////////////////
+//014 The reduce Method
+console.log(movements);
+
+const balance = movements.reduce((acc, cur, i, arr) => acc + cur, 0);
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+
+// Maxium value
+const max = movements.reduce((max,cur) => {
+  return cur > max ? cur : max
+}, movements[0])
+console.log(max);
+
+
+// 013 The Filter Method
+
+/* const deposit = movements.filter(mov => mov > 0)
+console.log(movements);
+console.log(deposit);
+
+const depositFor = [];
+for(const mov of movements) {mov>0?depositFor.push(mov):''}
+console.log(depositFor);
+
+const withdrawals = movements.filter(mov => mov<0)
+console.log(withdrawals ); */
+
+/////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+// 011 The map method
+/* const eurToUsd = 1.1;
+const movementsUSD = movements.map(
+  mov=> mov*eurToUsd
+)
+console.log(movements);
+console.log(movementsUSD);
+
+const movementsUSDfor = [];
+for(const mov of movements){
+  movementsUSDfor.push(mov*eurToUsd)
+}
+console.log(movementsUSDfor);
+
+const movementsDescriptions = movements.map(
+  (mov,i,_) =>{
+        return `Movement ${++i}: you ${mov >0 ?`deposited ${mov}`:`withdrew ${-mov}`} `;
+    }
+)
+console.log(movementsDescriptions);
+ */
+/////////////////////////////////////////////////
+// 009 CODING CHALLENCE #1
+/* const juliaData = [3, 5, 2, 12, 7],
+ KateData = [4, 1, 15, 8, 3];
+
+const juliaDataCop = juliaData.slice(1,-2);
+const dataDog = juliaDataCop.concat(KateData)
+const checkDogs = function(ages){
+  ages.forEach(function(age,i){
+    const type = age >=3 ? `an adult, and is ${age}  years old`:' still a puppy🐶';
+    console.log(`Dog number ${i+1} is ${type}  `);
+  })
+}
+checkDogs(dataDog);
+ */
 
 /////////////////////////////////////////////////
 // 006 forEach with Maps and Sets
-currencies.forEach(function (value, key, map) {
+/* currencies.forEach(function (value, key, map) {
   console.log(`${key} : ${value}  `);
 });
 
@@ -97,7 +184,7 @@ const currenciesUnique = new Set(currencies.keys());
 currenciesUnique.forEach(function (value, _, set) {
   console.log(`${value} : ${value}`);
 });
-
+ */
 /////////////////////////////////////////////////
 
 // 005 FOREACH
