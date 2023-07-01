@@ -76,22 +76,78 @@ const displayMovements = function (movements) {
 };
 
 displayMovements(account1.movements);
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const createUsernames = function(accs){
-  accs.forEach(function(acc){
-    acc.username = acc.owner.toLowerCase().split(' ').map(text => text[0]).join('')
-  })
-}
-createUsernames(accounts)
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(text => text[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
 
-const calcDisplayBalance = function(movements){
-  const balance = movements.reduce((acc, mov) => acc + mov, 0)
-  labelBalance.textContent = `${balance} EUR`
-}
-calcDisplayBalance(account1.movements)
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} €`;
+};
+calcDisplayBalance(account1.movements);
 
+const calcDisplaySumary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes} €`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc - mov, 0);
+  labelSumOut.textContent = `${out} €`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int);
+  labelSumInterest.textContent = interest;
+};
+calcDisplaySumary(account1.movements);
 // LECTURES
-const currencies = new Map([
+
+//The magic of chainging method
+/* console.log(movements);
+
+const eurToUsd = 1.1;
+const totalDepositUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    console.log(arr);
+    return mov * eurToUsd;
+  })
+  // .map(mov => mov * eurToUsd)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(totalDepositUSD); */
+
+// CODING CHALLENCE #2
+/* const calcAverageHumanAge = function (ages) {
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + 4 * age));
+  const adults = humanAges.filter(age => age >= 18);
+  const average = adults.reduce((acc, curr) => acc + curr, 0) / adults.length;
+  // const average = adults.reduce((acc, curr,_,arr) => acc + curr/arr.length, 0);
+  return average;
+};
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4])); */
+
+/////////////////////////////////////////////////
+
+/* const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
@@ -110,12 +166,11 @@ for (const mov of movements) balance2 += mov;
 console.log(balance2);
 
 // Maxium value
-const max = movements.reduce((max,cur) => {
-  return cur > max ? cur : max
-}, movements[0])
+const max = movements.reduce((max, cur) => {
+  return cur > max ? cur : max;
+}, movements[0]);
 console.log(max);
-
-
+ */
 // 013 The Filter Method
 
 /* const deposit = movements.filter(mov => mov > 0)
@@ -130,8 +185,6 @@ const withdrawals = movements.filter(mov => mov<0)
 console.log(withdrawals ); */
 
 /////////////////////////////////////////////////
-
-
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
