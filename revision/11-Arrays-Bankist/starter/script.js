@@ -75,7 +75,6 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const createUsernames = function (accs) {
@@ -89,13 +88,14 @@ const createUsernames = function (accs) {
 };
 createUsernames(accounts);
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} €`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance} €`;
 };
-calcDisplayBalance(account1.movements);
 
-const calcDisplaySumary = function (movements) {
+const calcDisplaySumary = function (acc) {
+  const movements = acc.movements;
+
   const incomes = movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
@@ -108,18 +108,103 @@ const calcDisplaySumary = function (movements) {
 
   const interest = movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * acc.interestRate) / 100)
     .filter((int, i, arr) => {
-      console.log(arr);
+      // console.log(arr);
 
       return int >= 1;
     })
     .reduce((acc, int) => acc + int);
   labelSumInterest.textContent = interest;
 };
-calcDisplaySumary(account1.movements);
-// LECTURES
 
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+  // Display balance
+  calcDisplayBalance(acc);
+  // Display summary
+  calcDisplaySumary(acc);
+};
+//Event handler
+let currentAccount;
+btnLogin.addEventListener('click', function (e) {
+  // Prevent form from submitting
+
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+    console.log(currentAccount);
+    
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    } `;
+    containerApp.style.opacity = 100;
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  // console.log(receiverAcc,amount);
+  
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    updateUI(currentAccount);
+  }
+});
+
+// LECTURES
+/////////////////////////////////////////////////
+// The find method
+/* const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+const account = accounts.find((acc, key) => {
+  console.log(key);
+  
+  acc.owner === 'Jessica Davis';
+});
+
+console.log(account);
+
+const map1 = Object.entries(account1).map(acc=>1);
+ */
+/* const account = accounts.filter(acc =>acc.owner === 'Jessica Davis')
+console.log(account[0]); */
+
+/////////////////////////////////////////////////
+// #Coding challence #3
+/* const calcAverageHumanAge = ages =>
+  ages
+    .map(age => (age <= 2 ? 2 * age : 16 + 4 * age))
+    .filter(age => age >= 18)
+    .reduce((acc, curr,_,adults) => acc + curr/adults.length, 0) ;
+
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4])); */
+
+/////////////////////////////////////////////////
 //The magic of chainging method
 /* console.log(movements);
 
