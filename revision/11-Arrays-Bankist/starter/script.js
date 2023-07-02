@@ -135,8 +135,8 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-    console.log(currentAccount);
-    
+  // console.log(currentAccount);
+
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
@@ -158,7 +158,7 @@ btnTransfer.addEventListener('click', function (e) {
     acc => acc.username === inputTransferTo.value
   );
   // console.log(receiverAcc,amount);
-  
+
   inputTransferAmount.value = inputTransferTo.value = '';
 
   if (
@@ -171,10 +171,56 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movements.push(amount);
     updateUI(currentAccount);
   }
+  
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+    // Update the UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = ''
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    accounts.splice(index, 1);
+    console.log(accounts);
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
 });
 
 // LECTURES
 /////////////////////////////////////////////////
+// 022 some and every
+console.log(movements);
+
+// EQUALITY
+console.log(movements.includes(-130));
+console.log(movements.some(mov => mov === -130)+'\n-----------');
+
+// some CONDITION
+console.log(account1.movements.some(mov => mov < -100000));
+
+// Every CONDITION
+console.log(account4.movements);
+
+console.log(account4.movements.every(mov => mov > 0));
+  
 // The find method
 /* const firstWithdrawal = movements.find(mov => mov < 0);
 console.log(movements);
