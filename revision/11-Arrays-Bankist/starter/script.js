@@ -61,9 +61,9 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements,sort = false) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  const movs = sort ? movements.slice().sort((a,b)=> a - b):movements;
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `<div class="movements__row">
@@ -204,17 +204,45 @@ btnClose.addEventListener('click', function (e) {
   inputCloseUsername.value = inputClosePin.value = '';
 });
 let sorted = false;
-btnSort.addEventListener('click', function(e){
+btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements,!sorted);
+  displayMovements(currentAccount.movements, !sorted);
   sorted = !sorted;
-})
+});
 
 // LECTURES
 /////////////////////////////////////////////////
+// 025 Moẻ Way ò creating and filling arrays
+const x = new Array(7);
+console.log(x);
+
+console.log(x.map(() => 5));
+x.fill(1, 3, 5);
+x.fill(1);
+
+console.log(x);
+// Array.from()
+const y = Array.from({ length: 7 }, () => 1);
+const z = Array.from({length:7},(_,i)=>i+1);
+// const randomArr  = Array.from({length:100},()=>Math.trunc(Math.random()*100+1));
+// console.log(randomArr);
+
+console.log(z);
+
+labelBalance.addEventListener('click',function(){
+  const movementsUI = Array.from(document.querySelectorAll('.movements__value'),
+  el => Number(el.textContent.replace('€',''))
+  )
+  console.log(movementsUI);
+  
+})
+
+
+
+/////////////////////////////////////////////////
 //024 Sorting Arrays
 //  String
-const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+/* const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
 console.log(owners.sort());
 console.log(owners);
 // Numbers
@@ -230,8 +258,7 @@ movements.sort((a, b) => {
     return -1;
 });
 console.log(movements);
-
-
+ */
 
 /////////////////////////////////////////////////
 //023 flat and flatMap()
