@@ -212,8 +212,139 @@ btnSort.addEventListener('click', function (e) {
 
 // LECTURES
 /////////////////////////////////////////////////
-// 025 Moẻ Way ò creating and filling arrays
-const x = new Array(7);
+// 028 Coding Challence #4
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+//1.
+dogs.forEach(dog => (dog.recommendedFood = dog.weight ** 0.75 * 28));
+// 2.
+const sarahDog = dogs.find(dog => dog.owners.includes('Sarah')).curFood;
+console.log(
+  sarahDog.curFood > sarahDog.recommendedFood
+    ? 'too much'
+    : (sarahDog.curFood < sarahDog.recommendedFood && 'too little') ||
+        'okay amount'
+);
+//3.
+const ownersEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recommendedFood * 1.1)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooMuch);
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recommendedFood * 0.9)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+//4.
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+//5.
+console.log(
+  dogs.some(dog => dog.curFood === dog.recommendedFood)
+    ? 'any dog eating exactly the amount of food'
+    : 'No any dog eating exactly the amount of food'
+);
+
+//6.
+const EatEnough = dog =>
+  dog.curFood <= dog.recommendedFood * 1.1 &&
+  dog.curFood >= dog.recommendedFood * 0.9;
+const dogEatEnouch = dogs.some(EatEnough);
+console.log(
+  dogEatEnouch
+    ? 'any dog eating an okay amount of food'
+    : 'No any dog eating an okay amount of food'
+);
+//7.
+const dogEatEnouchArr = dogs.filter(EatEnough);
+console.log(dogEatEnouchArr);
+// 8.
+const dogsCopy = dogs.slice().sort((dogA,dogB) => dogA.recommendedFood - dogB.recommendedFood);
+console.log(dogs);
+console.log(dogsCopy);
+
+/////////////////////////////////////////////////
+// Array Methods Practice
+//1.
+// const bankDeposit = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 0)
+//   .reduce((acc, cur) => acc + cur, 0);
+// console.log(bankDeposit);
+// //2. each Sum deposit people who has more than 1000 dolar
+// const numDeposit1000 = accounts
+//   .map(acc =>
+//     acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
+//   )
+//   .filter(deposit => deposit > 1000).length;
+// console.log(numDeposit1000);
+// //2.1 in all of deposit which ones more 100 dolars, console a number of it
+// //cach 1
+// const numDeposit100dol = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 1000).length;
+// console.log(numDeposit100dol);
+// // cach 2
+// const numDeposit1000dol2 = accounts.reduce(
+//   (sum, acc) => sum + acc.movements.filter(mov => mov > 1000).length,
+//   0
+// );
+// console.log(numDeposit1000dol2);
+// // cach 3
+// const numberDeposit100dol3 = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((acc, cur) => (cur > 1000 ? ++acc : acc), 0);
+// console.log(numberDeposit100dol3);
+// // 3. create obj which has a property sum of deposit and sum of withdrawl
+// const { deposit, withdrawal } = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce(
+//     (obj, mov) => {
+//       obj[mov > 0 ? 'deposit' : 'withdrawal'] += mov;
+//       return obj;
+//     },
+//     { deposit: 0, withdrawal: 0 }
+//   );
+// console.log(deposit, withdrawal);
+
+// // 4. convert string title
+// const convertTitleCase = function (title) {
+//   const convertTitle = title
+//     .toLowerCase()
+//     .split(' ')
+//     .map(words => {
+//       if (words.length > 1) {
+//         return words.replace(words[0], words[0].toUpperCase());
+//       }
+//       return words;
+//     })
+//     .join(' ');
+//   return convertTitle;
+// };
+
+// const convertTitleCaseExpect = function (title) {
+//   const capitzalize = str => str[0].toUpperCase() + str.slice(1);
+//   const expection = ['a', 'an', 'the', 'and', 'but', 'or', 'on', 'in', 'with'];
+//   /* const titleCase = title.toLowerCase().split(' ').map(word =>
+//     !expection.includes(word) ? word.replace(word[0],word[0].toUpperCase()):word
+//   ).join(' '); */
+//   const titleCase = title
+//     .toLowerCase()
+//     .split(' ')
+//     .map(word => (!expection.includes(word) ? capitzalize(word) : word))
+//     .join(' ');
+//   return capitzalize(titleCase);
+// };
+
+// console.log(convertTitleCase('this is a title'));
+// console.log(convertTitleCaseExpect('this is a title'));
+
+/////////////////////////////////////////////////
+// 025 More Way of creating and filling arrays
+/* const x = new Array(7);
 console.log(x);
 
 console.log(x.map(() => 5));
@@ -223,22 +354,23 @@ x.fill(1);
 console.log(x);
 // Array.from()
 const y = Array.from({ length: 7 }, () => 1);
-const z = Array.from({length:7},(_,i)=>i+1);
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
 // const randomArr  = Array.from({length:100},()=>Math.trunc(Math.random()*100+1));
 // console.log(randomArr);
 
 console.log(z);
 
-labelBalance.addEventListener('click',function(){
-  const movementsUI = Array.from(document.querySelectorAll('.movements__value'),
-  el => Number(el.textContent.replace('€',''))
-  )
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
   console.log(movementsUI);
-  
-})
+});
 
+console.log(movements.findIndex(mov => mov < 0)); */
 
-
+/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 //024 Sorting Arrays
 //  String
