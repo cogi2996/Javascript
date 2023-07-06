@@ -220,7 +220,9 @@ const dogs = [
   { weight: 32, curFood: 340, owners: ['Michael'] },
 ];
 //1.
-dogs.forEach(dog => (dog.recommendedFood = dog.weight ** 0.75 * 28));
+dogs.forEach(
+  dog => (dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28))
+);
 // 2.
 const sarahDog = dogs.find(dog => dog.owners.includes('Sarah')).curFood;
 console.log(
@@ -262,7 +264,9 @@ console.log(
 const dogEatEnouchArr = dogs.filter(EatEnough);
 console.log(dogEatEnouchArr);
 // 8.
-const dogsCopy = dogs.slice().sort((dogA,dogB) => dogA.recommendedFood - dogB.recommendedFood);
+const dogsCopy = dogs
+  .slice()
+  .sort((dogA, dogB) => dogA.recommendedFood - dogB.recommendedFood);
 console.log(dogs);
 console.log(dogsCopy);
 
