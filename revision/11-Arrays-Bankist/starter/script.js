@@ -270,6 +270,10 @@ const dogsCopy = dogs
 console.log(dogs);
 console.log(dogsCopy);
 
+(function(){
+  console.log(this);
+  
+})()
 /////////////////////////////////////////////////
 // Array Methods Practice
 //1.
