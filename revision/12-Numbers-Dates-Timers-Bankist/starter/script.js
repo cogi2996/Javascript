@@ -36,14 +36,14 @@ const account2 = {
   pin: 2222,
 
   movementsDates: [
-    '2019-11-01T13:15:33.035Z',
+    '2023-07-09T13:15:33.035Z',
     '2019-11-30T09:48:16.867Z',
     '2019-12-25T06:04:23.907Z',
     '2020-01-25T14:18:46.235Z',
     '2020-02-05T16:33:06.386Z',
-    '2020-04-10T14:43:26.374Z',
-    '2020-06-25T18:49:59.371Z',
-    '2020-07-26T12:01:20.894Z',
+    '2020-04-26T14:43:26.374Z',
+    '2020-06-28T18:49:59.371Z',
+    '2023-08-09T12:01:20.894Z',
   ],
   currency: 'USD',
   locale: 'en-US',
@@ -80,20 +80,40 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 // Functions
+const formatMovementDate = function (date) {
+  const calcDaysPass = (day1, day2) =>
+    Math.round(Math.abs(day2 - day1) / (1000 * 60 * 60 * 24));
+  const daysPassed = calcDaysPass(new Date(), date);
+  if (daysPassed === 0) {
+    return 'Today';
+  } else if (daysPassed === 1) {
+    return 'Yesterday';
+  } else if (daysPassed <= 7) {
+    return `${daysPassed} days ago`;
+  }
+  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acc, sort = false) {
+  const movements = acc.movements;
   containerMovements.innerHTML = '';
 
   const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const date = new Date(acc.movementsDates[i]);
 
+    const displayDate = formatMovementDate(date);
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
+        <div class="movements__date">${displayDate}</div>
         <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
@@ -141,7 +161,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -153,6 +173,9 @@ const updateUI = function (acc) {
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -169,7 +192,14 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
-
+    // Create current Date and Time
+    const now = new Date();
+    const day = `${now.getDate()}`.padStart(2, '0');
+    const month = `${now.getMonth() + 1}`.padStart(2, '0');
+    const year = `${now.getFullYear()}`.padStart(2, '0');
+    const hour = `${now.getHours()}`.padStart(2, '0');
+    const min = `${now.getMinutes()}`.padStart(2, '0');
+    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min} `;
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
@@ -196,7 +226,9 @@ btnTransfer.addEventListener('click', function (e) {
     // Doing the transfer
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
-
+    // add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
   }
@@ -210,7 +242,8 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
-
+    // Add Loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
   }
@@ -243,15 +276,25 @@ btnClose.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
 // LECTURES
 /////////////////////////////////////////////////
+//010. Operator with dates
+const future = new Date(2037, 10, 19, 15, 23);
+// console.log(Number(future) === future.getTime());
+
+const calcDaysPass = (day1, day2) =>
+  Math.abs(day2 - day1) / (1000 * 60 * 60 * 24);
+
+// console.log(calcDaysPass(new Date(2037, 4, 14), new Date(2037, 4, 4)));
+
+/////////////////////////////////////////////////
 //008 Create Dates
-const now = new Date();
+/* const now = new Date();
 console.log(now);
 console.log(new Date('Sat Jul 08 2023 22:56:50'));
 console.log(new Date('Jul 09 2010 22:0:0'));
@@ -264,10 +307,10 @@ console.log(new Date(account1.movementsDates[0]));
 console.log(new Date(2037,10,19,15,23,5));
 console.log(new Date(2037,10,37));
 console.log(new Date(0));
-console.log(new Date(3*24*60*60*1000));
+console.log(new Date(3*24*60*60*1000)); */
 
 // Working with dates
-console.log(`-Working with array-`);
+/* console.log(`-Working with array-`);
 
 const future = new Date(2037,10,19,15,23);
 console.log(future);
@@ -281,20 +324,7 @@ console.log(future.getSeconds());
 console.log(future.toISOString());
 console.log(future.getTime());
 console.log(new Date(future.getTime()));
-console.log(Date.now());
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(Date.now()); */
 
 /////////////////////////////////////////////////
 //007 Working with BigInt
@@ -328,12 +358,6 @@ console.log(11n + 3n);
 console.log(11n - 3n);
  */
 
-
-
-
-
-
-
 /////////////////////////////////////////////////
 // 006 numeric separator
 /* const num = 12_34_456;
@@ -353,9 +377,8 @@ console.log(+str.replace(/_/g,''));
 // labelBalance.addEventListener('click',function(){
 //   Array.from(document.querySelectorAll('.movements__row')).forEach((row,i)=>i%2===0?row.style.backgroundColor = 'orangered':'');
 //   [...document.querySelector('.movements__row')].forEach((row,i)=>i%2===0?row.style.backgroundColor = 'orangered':'');
-  
-// })
 
+// })
 
 /////////////////////////////////////////////////
 //004 Math and Rounding
