@@ -80,7 +80,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 // Functions
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, locale) {
   const calcDaysPass = (day1, day2) =>
     Math.round(Math.abs(day2 - day1) / (1000 * 60 * 60 * 24));
   const daysPassed = calcDaysPass(new Date(), date);
@@ -91,10 +91,11 @@ const formatMovementDate = function (date) {
   } else if (daysPassed <= 7) {
     return `${daysPassed} days ago`;
   }
-  const day = `${date.getDate()}`.padStart(2, '0');
+  /* const day = `${date.getDate()}`.padStart(2, '0');
   const month = `${date.getMonth() + 1}`.padStart(2, '0');
   const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
+  return `${day}/${month}/${year}`; */
+  return new Intl.DateTimeFormat(locale).format(date);
 };
 
 const displayMovements = function (acc, sort = false) {
@@ -107,7 +108,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const date = new Date(acc.movementsDates[i]);
 
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, acc.locale);
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
@@ -172,6 +173,8 @@ const updateUI = function (acc) {
 
 ///////////////////////////////////////
 // Event handlers
+
+// Fake always logged in
 let currentAccount;
 currentAccount = account1;
 updateUI(currentAccount);
@@ -194,12 +197,21 @@ btnLogin.addEventListener('click', function (e) {
     containerApp.style.opacity = 100;
     // Create current Date and Time
     const now = new Date();
-    const day = `${now.getDate()}`.padStart(2, '0');
-    const month = `${now.getMonth() + 1}`.padStart(2, '0');
-    const year = `${now.getFullYear()}`.padStart(2, '0');
-    const hour = `${now.getHours()}`.padStart(2, '0');
-    const min = `${now.getMinutes()}`.padStart(2, '0');
-    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min} `;
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      // month: 'long',
+      month: 'numeric',
+      year: 'numeric',
+      // weekday: 'long',
+    };
+    // const locate = navigator.language;
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
@@ -240,12 +252,14 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
-    // Add Loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
-    // Update UI
-    updateUI(currentAccount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
+      // Add Loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -283,16 +297,36 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 /////////////////////////////////////////////////
-//010. Operator with dates
-const future = new Date(2037, 10, 19, 15, 23);
-// console.log(Number(future) === future.getTime());
+// 013 Times_setTimeOut and setInterval
 
-const calcDaysPass = (day1, day2) =>
-  Math.abs(day2 - day1) / (1000 * 60 * 60 * 24);
+const ingredients = ['olives', 'spinach'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}  `),
+  3000,
+  ...ingredients
+);
+console.log('Waiting...');
+
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+setInterval(function(){
+  const now = new Date();
+  console.log(new Intl.DateTimeFormat(navigator.language,{hour:'numeric',minute:'numeric',second:'numeric'}).format(now));
+},1000)
+/////////////////////////////////////////////////
+//010. Operator with dates
+// const future = new Date(2037, 10, 19, 15, 23);
+// // console.log(Number(future) === future.getTime());
+
+// const calcDaysPass = (day1, day2) =>
+//   Math.abs(day2 - day1) / (1000 * 60 * 60 * 24);
 
 // console.log(calcDaysPass(new Date(2037, 4, 14), new Date(2037, 4, 4)));
 
 /////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+
 //008 Create Dates
 /* const now = new Date();
 console.log(now);
