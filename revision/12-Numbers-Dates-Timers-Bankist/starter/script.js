@@ -175,10 +175,34 @@ const updateUI = function (acc) {
 // Event handlers
 
 // Fake always logged in
-let currentAccount;
-currentAccount = account1;
+let currentAccount, timer;
+/* currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
+ */
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    // In each call, print the remaining time to UI
+    labelTimer.textContent = `${min}:${sec} `;
+
+    // When 0 seconds,stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+    // Decrese 1s
+    time--;
+  };
+  // Set time to 5 minutes
+  let time = 120;
+  // Call the timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -215,7 +239,8 @@ btnLogin.addEventListener('click', function (e) {
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
-
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
     // Update UI
     updateUI(currentAccount);
   }
@@ -243,6 +268,9 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
+    // Clear Timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -259,6 +287,9 @@ btnLoan.addEventListener('click', function (e) {
       currentAccount.movementsDates.push(new Date().toISOString());
       // Update UI
       updateUI(currentAccount);
+      // Clear Timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 2500);
   }
   inputLoanAmount.value = '';
@@ -299,7 +330,7 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // 013 Times_setTimeOut and setInterval
 
-const ingredients = ['olives', 'spinach'];
+/* const ingredients = ['olives', 'spinach'];
 const pizzaTimer = setTimeout(
   (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}  `),
   3000,
@@ -312,7 +343,7 @@ if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
 setInterval(function(){
   const now = new Date();
   console.log(new Intl.DateTimeFormat(navigator.language,{hour:'numeric',minute:'numeric',second:'numeric'}).format(now));
-},1000)
+},1000) */
 /////////////////////////////////////////////////
 //010. Operator with dates
 // const future = new Date(2037, 10, 19, 15, 23);
