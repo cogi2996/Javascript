@@ -58,5 +58,50 @@ document
   .addEventListener('click', function () {
     message.remove();
     // message.parentElement.removeChild(message);
-
   });
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+console.log(message.style.color);
+console.log(message.style.height);
+console.log(getComputedStyle(message).height);
+
+
+message.style.height =
+  parseInt(getComputedStyle(message).height,10) + 40 + 'px';
+// message.style.setProperty('background-color','red')
+
+document.documentElement.style.setProperty('--color-primary','orangered')
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.className);
+logo.alt = 'Beautiful minimalist logo';
+// logo.setAttribute('alt', 'Beautiful minimalist logo');
+// Non-standard
+console.log(logo.designer);
+console.log(logo.getAttribute('designer'));
+console.log('-================================================');
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+
+console.log(link.dataset.versionNumber);
+
+// Classes
+logo.classList.add('c','j');
+logo.classList.remove('c','j');
+// logo.classList.toggle('c');
+logo.classList.contains('c');
+
+// overlay class --> Don't use
+/* logo.className = 'jonas'
+console.log(logo.className); */
+
+logo.setAttribute('hihi','hoho')
+
+
