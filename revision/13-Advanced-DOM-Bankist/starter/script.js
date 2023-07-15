@@ -68,7 +68,6 @@ document
 // console.log(message.style.height);
 // console.log(getComputedStyle(message).height);
 
-
 // message.style.height =
 //   parseInt(getComputedStyle(message).height,10) + 40 + 'px';
 // // message.style.setProperty('background-color','red')
@@ -90,7 +89,6 @@ document
 // console.log(link.href);
 // console.log(link.getAttribute('href'));
 
-
 // console.log(link.dataset.versionNumber);
 
 // // Classes
@@ -103,24 +101,64 @@ document
 // /* logo.className = 'jonas'
 // console.log(logo.className); */
 
-
 const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1')
+const section1 = document.querySelector('#section--1');
 
-btnScrollTo.addEventListener('click', function(e) {
+btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
   console.log(e.target.getBoundingClientRect());
   console.log('Current scrolll (X/Y)', window.pageXOffset, window.pageYOffset);
-  console.log('height/width viewport', document.documentElement.clientWidth,document.documentElement.clientHeight);
-  // Scrolling 
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientWidth,
+    document.documentElement.clientHeight
+  );
+  // Scrolling
   // window.scrollTo(s1coords.left+window.pageXOffset, s1coords.top+window.pageYOffset)
   /* window.scrollTo({
     left: s1coords.left + window.pageXOffset,
     top: s1coords.top + window.pageYOffset,
     behavior:'smooth'
   }) */
-  section1.scrollIntoView({behavior:'smooth'});
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+// const h1 = document.querySelector('h1');
+// const alertH1 = function (e) {
+//   alert('addEventListener: Great! You are reading the heading :D');
+//   // h1.removeEventListener('mouseenter',alertH1);
+// };
+// h1.addEventListener('mouseenter', alertH1);
+
+// /* h1.addEventListener('mouseenter',function(e){
+//   alert('hello');
+// }) */
+// setTimeout(() => {
+//   h1.removeEventListener('mouseenter', alertH1);
+// }, 3000);
+
+const randomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// console.log(randomColor());
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  console.log('Link',e.target,e.currentTarget);
+  this.style.backgroundColor = randomColor();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log('Link',e.target,e.currentTarget);
+  this.style.backgroundColor = randomColor();
+  // e.stopPropagation();
+  
+},true);
+
+document.querySelector('.nav').addEventListener('click',function(e) {
+  console.log('Link',e.target,e.currentTarget);
+  this.style.backgroundColor = randomColor();
 })
-
-
