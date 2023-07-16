@@ -87,17 +87,38 @@ btnScrollTo.addEventListener('click', function (e) {
 
 // 1. Add event listener to common parent element
 // 2. Determine what element originated the event
-document.querySelector('.nav__links').addEventListener('click',function(e) {
+document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
   // Matching strategy
-  if(e.target.classList.contains('nav__link'))
-  {
-    
+  if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
-    document.querySelector(id).scrollIntoView({behavior:'smooth'})
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// tabs.forEach(t => t.addEventListener('click', () => console.log('Tab')));
+
+tabsContainer.addEventListener('click',function(e){
+  const clicked  = e.target.closest('.operations__tab');
+  console.log(clicked);
+  // Guard clause
+  if(!clicked) return;
+  // remove active classes
+  tabs.forEach(t=>t.classList.remove('operations__tab--active'))
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'))
+  // Active tab
+  clicked.classList.add('operations__tab--active')
+  // Active content area
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
   
 })
+
+
 //----------------------------------------------------------------
 // Styles
 // message.style.backgroundColor = '#37383d';
@@ -170,18 +191,17 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
 }); */
 
-
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
 // Going downwards: child
-console.log(h1.querySelectorAll('.highlight'));
+/* console.log(h1.querySelectorAll('.highlight'));
 console.log(h1.childNodes);
 console.log(h1.children);
 h1.firstElementChild.style.color = 'white'
-h1.lastElementChild.style.color = 'orange'
+h1.lastElementChild.style.color = 'orange' */
 
 // Going upwards: parents
-console.log(h1.parentNode);
+/* console.log(h1.parentNode);
 console.log(h1.parentElement);
 console.log(document.documentElement.parentNode);
 console.log(document.documentElement.parentElement);
@@ -200,4 +220,4 @@ console.log(h1.parentElement.children);
 [...h1.parentElement.children].forEach(function(el){
   if(el != h1)
     el.style.transform = 'scale(0.5)';
-})
+}) */
