@@ -214,32 +214,77 @@ allSections.forEach(function (section) {
   section.classList.add('section--hidden');
 }); */
 
-const revealSection = function(entries,observer){
+const revealSection = function (entries, observer) {
   const [entry] = entries;
-  if(!entry.isIntersecting) return;
+  if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
-}
+};
 
-const sectionObserver = new IntersectionObserver(revealSection,{root:null,threshold:0.15});
-allSections.forEach(function(section){
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
-})
-// Lazy loading images
-/* const imgTarget = document.querySelectorAll('img[data-src]');
-console.log(imgTarget);
+  // section.classList.add('section--hidden');
+});
+// // Lazy loading images
 
-const loadImg = function(entries,observer){
+const imgTarget = document.querySelectorAll('img[data-src]');
+const loadImg = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
-  
-}
-
-const imgObserver = new IntersectionObserver(loadImg, {root: null,threshold:0})
+  // console.log(entry);
+  //Gaurd clause
+  if (!entry.isIntersecting) return;
+  entry.target.src = entry.target.dataset.src;
+  // Remove lazy-img
+  entry.target.addEventListener('load', function () {
+    this.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0.15,
+  rootMargin: '200px',
+});
 imgTarget.forEach(img => imgObserver.observe(img));
- */
 
+// Slider
+
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+let curSlide = 0;
+let maxSlide = slides.length;
+/* const slider = document.querySelector('.slider');
+slider.style.transform = `scale(0.4) translateX(-800px)`;
+slider.style.overflow = 'visible'; */
+
+const gotoSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+gotoSlide(0);
+// Next slide
+const nextSlide = function () {
+  curSlide++;
+  if (curSlide === maxSlide) {
+    curSlide = 0;
+  }
+  gotoSlide(curSlide);
+};
+const prevSlide = function () {
+  curSlide--;
+  if (curSlide === -1) {
+    curSlide = maxSlide-1;
+  }
+  gotoSlide(curSlide);
+};
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
 //----------------------------------------------------------------
 // Styles
 // message.style.backgroundColor = '#37383d';
