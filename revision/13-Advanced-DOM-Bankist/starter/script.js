@@ -252,7 +252,6 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTarget.forEach(img => imgObserver.observe(img));
 
 // Slider
-
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
@@ -262,7 +261,29 @@ let maxSlide = slides.length;
 slider.style.transform = `scale(0.4) translateX(-800px)`;
 slider.style.overflow = 'visible'; */
 
-const gotoSlide = function (slide) {
+const gotoSlide = function () {
+  slides.forEach(function (s, i) {
+    s.style.transform = `translateX(${(i  - curSlide)*100}%)`;
+  });
+};
+gotoSlide(0);
+btnRight.addEventListener('click', function () {
+  curSlide++;
+  if (curSlide === slides.length) {
+    curSlide = 0;
+  }
+  gotoSlide(curSlide);
+});
+
+btnLeft.addEventListener('click', function () {
+  curSlide--;
+  if (curSlide === -1) {
+    curSlide = slides.length - 1;
+  }
+  gotoSlide(curSlide);
+});
+
+/* const gotoSlide = function (slide) {
   slides.forEach(
     (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
   );
@@ -284,7 +305,8 @@ const prevSlide = function () {
   gotoSlide(curSlide);
 };
 btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', prevSlide);
+btnLeft.addEventListener('click', prevSlide); */
+
 //----------------------------------------------------------------
 // Styles
 // message.style.backgroundColor = '#37383d';
