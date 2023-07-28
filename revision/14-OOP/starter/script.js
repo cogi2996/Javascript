@@ -89,64 +89,114 @@
 
 // }
 
-class PersonCl {
-  constructor(fullName, birhtYear) {
-    this.fullName = fullName;
-    this.birthYear = birhtYear;
-  }
-  // Method will be added to .prototype property
-  calcAge() {
-    console.log(2037 - this.birthYear);
-  }
-  greet() {
-    console.log(`Hey ${this.fullName}`);
-  }
-  get age() {
-    return 2037 - this.birthYear;
-  }
-  // set a property that already exist
-  set fullName(name){
-    if(name.includes(' ')) this._fullName = name;
-    else alert('Name is not a full name');
-  }
+// class PersonCl {
+//   constructor(fullName, birhtYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birhtYear;
+//   }
+//   // Method will be added to .prototype property
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+//   greet() {
+//     console.log(`Hey ${this.fullName}`);
+//   }
+//   get age() {
+//     return 2037 - this.birthYear;
+//   }
+//   // set a property that already exist
+//   set fullName(name) {
+//     if (name.includes(' ')) this._fullName = name;
+//     else alert('Name is not a full name');
+//   }
 
-  get fullName (){
-    return this._fullName;
-  }
+//   get fullName() {
+//     return this._fullName;
+//   }
 
-  static hey (){
-    console.log('Hey 👋');
-    console.log(this);
-    
-  }
-}
+//   static hey() {
+//     console.log('Hey 👋');
+//     console.log(this);
+//   }
+// }
 
 /* PersonCl.hey = function(){
   console.log('Hey 👋');
   console.log(this);
   
 } */
-PersonCl.hey();
-const jessica = new PersonCl('Jessica Davis', 1996);
-console.log(jessica);
-jessica.calcAge();
-console.log(jessica.__proto__ === PersonCl.prototype);
+// PersonCl.hey();
+// const jessica = new PersonCl('Jessica Davis', 1996);
+// console.log(jessica);
+// jessica.calcAge();
+// console.log(jessica.__proto__ === PersonCl.prototype);
 /* PersonCl.prototype.greet = function(){
   console.log(`Hey ${this.firstName}`);
 }
  */
-jessica.greet();
+// jessica.greet();
 
-const account = {
-  owner: 'Jonas',
-  movement: [200, 530, 120, 300],
-  get latest() {
-    return this.movement.at(-1);
-  },
-  set latest(mov) {
-    this.movement.push(mov);
-  },
-};
+// const account = {
+//   owner: 'Jonas',
+//   movement: [200, 530, 120, 300],
+//   get latest() {
+//     return this.movement.at(-1);
+//   },
+//   set latest(mov) {
+//     this.movement.push(mov);
+//   },
+// };
 
-console.log(account.latest);
-account.movement = 50;
+// console.log(account.latest);
+// account.movement = 50;
+
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
+//   init(firstName,birthYear){
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   }
+// };
+
+// const steven = Object.create(PersonProto);
+// console.log(steven);
+// steven.name = 'Steven';
+// steven.birthYear = 2002;
+// steven.calcAge();
+// steven.__proto__.calcAge.call(steven);
+// console.log(steven.__proto__ === PersonProto);
+// const sarah = Object.create(PersonProto);
+// sarah.init('sarah',1979);
+// sarah.calcAge();
+// console.log(sarah);
+
+
+class CarCl {
+  constructor(make,speed){
+    this.make = make;
+    this.speed = speed;
+  }
+  get speedUS (){
+    return this.speed/1.6;
+  }
+  set speedUS(speed){
+    this.speed = speed*  1.6;
+  }
+  accelents(){
+    this.speed+=10;
+    console.log(`'${this.make}' going at ${this.speed} km/h`);
+  }
+  brake(){
+    this.speed-=5;
+    console.log(`'${this.make}' going at ${this.speed} km/h`);
+  }
+}
+
+const car1 = new CarCl('Ford',120);
+console.log(car1.speedUS);
+car1.speedUS = 120/1.6;
+
+console.log(car1);
+
