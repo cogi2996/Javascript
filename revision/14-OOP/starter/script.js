@@ -172,8 +172,7 @@
 // sarah.calcAge();
 // console.log(sarah);
 
-
-class CarCl {
+/* class CarCl {
   constructor(make,speed){
     this.make = make;
     this.speed = speed;
@@ -200,3 +199,184 @@ car1.speedUS = 120/1.6;
 
 console.log(car1);
 
+ */
+
+/* const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this,firstName, birthYear);
+  this.course = course;
+};
+
+
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+console.log(mike);
+mike.introduce();
+console.log(mike.__proto__); // step link 
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+
+console.dir(Student.prototype.constructor); */
+
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// };
+
+// Car.prototype.accelerate = function(){
+//   this.speed+=10;
+//   console.log(`'${this.make}' going at ${this.speed} km/h  `);
+// }
+// Car.prototype.brake = function(){
+//   this.speed-=5;
+//   console.log(`'${this.make}' going at ${this.speed} km/h  `);
+// }
+
+// const EV = function(make,speed,charge) {
+//   Car.call(this,make,speed);
+//   this.charge =charge;
+// };
+// // Link the prototypes
+// EV.prototype = Object.create(Car.prototype);
+// EV.prototype.chargeBattery = function(chargeTo){
+//   this.charge = chargeTo;
+// }
+
+// EV.prototype.accelerate = function(){
+//   // Polymorphism but wanting to inherit from father class ( Car )
+//   Car.prototype.accelerate.call(this);
+//   //
+//   /* this.speed+=20; */
+//   this.charge--;
+//   console.log(`'${this.make}' going at ${this.speed}km/h, with a charge of ${this.charge}%`);
+// }
+
+// const tesla = new EV( 'Tesla',120,23);
+// tesla.chargeBattery(90);
+// tesla.brake();
+// tesla.accelerate();
+// Inheritance class ESC6
+/* class PersonCl {
+  constructor(fullName, birhtYear) {
+    this.fullName = fullName;
+    this.birthYear = birhtYear;
+  }
+  // Method will be added to .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  // set a property that already exist
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert('Name is not a full name');
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  static hey() {
+    console.log('Hey 👋');
+    console.log(this);
+  }
+}
+
+class StudentCl extends PersonCl {
+  constructor(fullName, birhtYear, course) {
+    // Always need to happen first
+    super(fullName, birhtYear);
+    this.course = course;
+  }
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } year old, but as a student I feel more  like ${2037 - this.birthYear+10}`
+    );
+  }
+}
+
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
+ */
+
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
+
+// const steven = Object.create(PersonProto);
+
+// const StudentProto = Object.create(PersonProto);
+
+// StudentProto.init = function (firstName, birthYear, course) {
+//   PersonProto.init.call(this, firstName, birthYear);
+//   this.course = course;
+// };
+// StudentProto.introduce = function () {
+//   console.log(`My name is ${this.firstName} and I study ${this.course}`);
+// };
+// /* StudentProto.init = function(firstName,birthYear,course){
+  
+// } */
+// const jay = Object.create(StudentProto);
+// jay.init('Jay-z', 1990, 'DSA');
+// console.log(jay);
+// jay.introduce();
+// jay.calcAge();
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const StudentProto = Object.create(PersonProto);
+
+StudentProto.init= function(firstName,birthYear,course){
+    PersonProto.init.call(this,firstName,birthYear);
+    this.course = course;
+}
+
+StudentProto.introduce = function(){
+    console.log(`My name is ${this.firstName} and I study ${this.course}`);
+}
+
+const jay = Object.create(StudentProto);
+jay.init('Jay-z',1990,'DSA');
+console.log(jay);
