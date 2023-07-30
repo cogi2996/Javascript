@@ -349,14 +349,14 @@ martha.calcAge();
 //   console.log(`My name is ${this.firstName} and I study ${this.course}`);
 // };
 // /* StudentProto.init = function(firstName,birthYear,course){
-  
+
 // } */
 // const jay = Object.create(StudentProto);
 // jay.init('Jay-z', 1990, 'DSA');
 // console.log(jay);
 // jay.introduce();
 // jay.calcAge();
-const PersonProto = {
+/* const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
   },
@@ -379,4 +379,67 @@ StudentProto.introduce = function(){
 
 const jay = Object.create(StudentProto);
 jay.init('Jay-z',1990,'DSA');
-console.log(jay);
+console.log(jay); */
+//1) public fields
+//2) Private fields
+//3) Public methods
+//4) Private methods
+class Account {
+  // 1)Public fields (instance)
+  locate = navigator.language;
+  // 2)Private fields (instance)
+  #movement = [];
+  #pin;
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    //Protect Property
+    this.#pin = pin;
+    // console.log(`Thank for opening an account, ${owner}`);
+  }
+  // 3) Public methods
+  //Public interface
+  getMovement() {
+    return this.#movement;
+  }
+  deposit(val) {
+    this.#movement.push(val);
+    return this;
+  }
+  widthraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved`);
+    }
+    return this;
+  }
+
+  // 4) Private methods
+  _approveLoan(val) {
+    return true;
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+console.log(acc1);
+acc1.deposit(250);
+acc1.widthraw(140);
+console.log(acc1);
+acc1.requestLoan(1000);
+// acc1.getMovement().push(2000);
+console.log(acc1.getMovement());
+// console.log(acc1.#pin);
+// console.log(acc1.#movements);
+console.log(acc1._approveLoan(1000));
+
+// chaining 
+acc1.deposit(300).deposit(500).widthraw(35).requestLoan(25000).widthraw(4000);
+
+console.log(acc1.getMovement());
