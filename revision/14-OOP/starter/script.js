@@ -384,62 +384,133 @@ console.log(jay); */
 //2) Private fields
 //3) Public methods
 //4) Private methods
-class Account {
-  // 1)Public fields (instance)
-  locate = navigator.language;
-  // 2)Private fields (instance)
-  #movement = [];
-  #pin;
-  constructor(owner, currency, pin) {
-    this.owner = owner;
-    this.currency = currency;
-    //Protect Property
-    this.#pin = pin;
-    // console.log(`Thank for opening an account, ${owner}`);
+// class Account {
+//   // 1)Public fields (instance)
+//   locate = navigator.language;
+//   // 2)Private fields (instance)
+//   #movement = [];
+//   #pin;
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     //Protect Property
+//     this.#pin = pin;
+//     // console.log(`Thank for opening an account, ${owner}`);
+//   }
+//   // 3) Public methods
+//   //Public interface
+//   getMovement() {
+//     return this.#movement;
+//   }
+//   deposit(val) {
+//     this.#movement.push(val);
+//     return this;
+//   }
+//   widthraw(val) {
+//     this.deposit(-val);
+//     return this;
+//   }
+
+//   requestLoan(val) {
+//     if (this._approveLoan(val)) {
+//       this.deposit(val);
+//       console.log(`Loan approved`);
+//     }
+//     return this;
+//   }
+
+//   // 4) Private methods
+//   _approveLoan(val) {
+//     return true;
+//   }
+// }
+
+// const acc1 = new Account('Jonas', 'EUR', 1111);
+// console.log(acc1);
+// acc1.deposit(250);
+// acc1.widthraw(140);
+// console.log(acc1);
+// acc1.requestLoan(1000);
+// // acc1.getMovement().push(2000);
+// console.log(acc1.getMovement());
+// // console.log(acc1.#pin);
+// // console.log(acc1.#movements);
+// console.log(acc1._approveLoan(1000));
+
+// // chaining
+// acc1.deposit(300).deposit(500).widthraw(35).requestLoan(25000).widthraw(4000);
+
+// console.log(acc1.getMovement());
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
   }
-  // 3) Public methods
-  //Public interface
-  getMovement() {
-    return this.#movement;
-  }
-  deposit(val) {
-    this.#movement.push(val);
-    return this;
-  }
-  widthraw(val) {
-    this.deposit(-val);
-    return this;
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
   }
 
-
-
-  requestLoan(val) {
-    if (this._approveLoan(val)) {
-      this.deposit(val);
-      console.log(`Loan approved`);
-    }
-    return this;
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
   }
 
-  // 4) Private methods
-  _approveLoan(val) {
-    return true;
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed =speed * 1.6;
   }
 }
 
-const acc1 = new Account('Jonas', 'EUR', 1111);
-console.log(acc1);
-acc1.deposit(250);
-acc1.widthraw(140);
-console.log(acc1);
-acc1.requestLoan(1000);
-// acc1.getMovement().push(2000);
-console.log(acc1.getMovement());
-// console.log(acc1.#pin);
-// console.log(acc1.#movements);
-console.log(acc1._approveLoan(1000));
+class EVCl extends CarCl {
+  // Private fields
+  #charge;
+  constructor(make, speed, charge) {
+    super(make,speed);
+    this.#charge = charge;
+  }
+  // function Prototype 
+  // Public method
+  accelerate() {
+    this.#charge--;
+    console.log(
+      `'${this.make}' going at ${this.speed}km/h, with a charge of ${
+        this.#charge
+      }%`
+    );
+    return this;
+  }
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+  }
+  brake(){
+    CarCl.prototype.brake.call(this);
+    return this;
+  }
+}
+const car1 = new EVCl('Tesla',120,23);
+// console.log(car1);
+car1.speedUS = 300;
+// console.log(car1);
+// car1.accelerate();
+// car1.brake();
+car1.accelerate().brake().brake().accelerate();
 
-// chaining 
-acc1.deposit(300).deposit(500).widthraw(35).requestLoan(25000).widthraw(4000);
 
-console.log(acc1.getMovement());
+
+// EV.prototype.chargeBattery = function(chargeTo){
+//   this.charge = chargeTo;
+// }
+
+// EV.prototype.accelerate = function(){
+//   // Polymorphism but wanting to inherit from father class ( Car )
+//   Car.prototype.accelerate.call(this);
+//   //
+//   /* this.speed+=20; */
+//   this.charge--;
+//   console.log(`'${this.make}' going at ${this.speed}km/h, with a charge of ${this.charge}%`);
+// }
