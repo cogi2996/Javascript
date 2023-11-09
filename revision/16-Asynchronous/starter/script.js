@@ -156,25 +156,80 @@ const countriesContainer = document.querySelector('.countries');
 // });
 //
 // lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
-const wait = function (seconds) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, seconds * 1000);
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+// let i = 0;
+// wait(i)
+//   .then(() => {
+//     console.log(`I waited for ${i}  seconds`);
+//     return wait(++i);
+//   })
+//   .then(() => {
+//     console.log(`I waited for ${i}  seconds`);
+//     return wait(++i);
+//   })
+//   .then(() => {
+//     console.log(`I waited for ${i}  seconds`);
+//     return wait(++i);
+//   });
+
+// Promise.resolve('fullfill promise').then(res => console.log(res));
+// Promise.reject(new Error('rejected promise')).catch(err => console.log(err));
+
+// Promise.resolve("it's data").then(res => console.log(res));
+// const promise = new Promise(function (resolve, reject) {
+//   resolve("it's data");
+// });
+// promise.then(res => console.log(res));
+// navigator.geolocation.getCurrentPosition(
+//   position => console.log(position),
+//   err => console.err(err)
+// );
+
+console.log('Getting position');
+
+const getPosition = function () {
+  // return new Promise(function (resolve, reject) {
+  //   navigator.geolocation.getCurrentPosition(resolve(position), reject(err));
+  // });
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 };
-let i = 0;
-wait(i)
-  .then(() => {
-    console.log(`I waited for ${i}  seconds`);
-    return wait(++i);
-  })
-  .then(() => {
-    console.log(`I waited for ${i}  seconds`);
-    return wait(++i);
-  })
-  .then(() => {
-    console.log(`I waited for ${i}  seconds`);
-    return wait(++i);
-  });
 
-Promise.resolve('fullfill promise').then(res => console.log(res));
-Promise.reject(new Error('rejected promise')).catch(err => console.log(err));
+// getPosition()
+//   .then(pos => console.log(pos))
+//   .catch(err => console.err(err));
+
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude, longitude } = pos.coords;
+      console.log(latitude, longitude);
+      // console.log(pos);
+      return fetch(
+        `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=121713347530917140919x56266`
+      );
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`can not get country - ${response.status} `);
+      return response.json();
+    })
+    .then(data => {
+      console.log(`You are in ${data.state},${data.country}`);
+      console.log(data);
+      return getCountryDataAndNeighBour(data.country);
+    })
+
+    .catch(err => {
+      console.log(`something went wrong - ${err}`);
+      alert(`something went wrong ${err}`);
+    });
+};
+
+// whereAmI(52.508, 13.381);
+btn.addEventListener('click', whereAmI);
